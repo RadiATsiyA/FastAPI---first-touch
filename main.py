@@ -1,19 +1,16 @@
 from fastapi import FastAPI
-from schemas import Book
+from schemas import HotelSchema, BookingSchema
 
 
 app = FastAPI()
 
 
-@app.get("/books")
-def get_book():
-    book = Book(title="Martin Iden", writer="Djeck London", duration="idk",
-                summary="from stupid to genius", genres="roman")
-
-    return book
+@app.get("/hotels")
+def get_hotels_list(hotels: int, location: str, stars: str = None):
+    return hotels
 
 
-@app.post("/books")
-def add_book(book: Book):
-    return book
+@app.post("/booking")
+def book_hotel(booking_hotel: BookingSchema):
+    return booking_hotel
 
