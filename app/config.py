@@ -1,5 +1,10 @@
-from pydantic import root_validator, Field
+from pydantic import model_validator, Field
 from pydantic_settings import BaseSettings
+import os
+from dotenv import load_dotenv
+
+
+load_dotenv()
 
 
 class Settings(BaseSettings):
@@ -8,11 +13,11 @@ class Settings(BaseSettings):
     DB_USER: str
     DB_PASS: str
     DB_NAME: str
-    DATABASE_URL: str = Field(default=None)
+    DATABASE_URL: str = None
 
-    @root_validator(pre=True)
+    @model_validator(mode="before")
     def get_database_url(cls, v):
-        v["DATABASE_URL"] = f"postgresql+asyncpg://{v['DB_USER']}:{v['DB_PASS']}@{v['DB_HOST']}/{v['DB_NAME']}"
+        v["DATABASE_URL"] = f"postgresql+asyncpg://{v['DB_USER']}:{v['DB_PASS']}@{v['DB_HOST']}:{v['DB_PORT']}/{v['DB_NAME']}"
         return v
 
     class Config:
