@@ -1,16 +1,16 @@
 from fastapi import FastAPI
-from schemas import HotelSchema, BookingSchema
+
+from app.bookings.router import router as bookings_router
+from app.users.router import router as users_router
 
 
 app = FastAPI()
 
-
-@app.get("hotels")
-def get_hotels_list(hotels: int, location: str, stars: str = None):
-    return hotels
+app.include_router(users_router)
+app.include_router(bookings_router)
 
 
-@app.post("/booking")
-def book_hotel(booking_hotel: BookingSchema):
-    return booking_hotel
+
+
+
 
