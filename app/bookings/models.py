@@ -1,5 +1,7 @@
+from sqlalchemy.orm import column_property
+
 from app.database import Base
-from sqlalchemy import Column, Integer, ForeignKey, Date, Computed
+from sqlalchemy import Column, Integer, ForeignKey, Date, Computed, func
 
 
 class Bookings(Base):
@@ -11,5 +13,5 @@ class Bookings(Base):
     date_from = Column(Date, nullable=False)
     date_to = Column(Date, nullable=False)
     price = Column(Integer, nullable=False)
-    total_cost = Column(Integer, Computed("ABS(date_to - date_from) * price"))
-    total_days = Column(Integer, Computed("ABS(date_to - date_from)"))
+    total_cost = column_property(func.abs(func.datediff('day', date_to, date_from)) * price)
+    total_days = column_property(func.abs(func.datediff('day', date_to, date_from)))
