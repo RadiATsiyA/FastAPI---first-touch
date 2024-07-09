@@ -1,5 +1,5 @@
 from pydantic import Json
-from sqlalchemy import insert
+from sqlalchemy import insert, select
 
 from app.database import async_session_maker
 from app.services.base import BaseServices
@@ -22,6 +22,21 @@ class HotelsService(BaseServices):
             new_hotel = await session.execute(add_hotel)
             await session.commit()
             return new_hotel.scalar_one_or_none()
+
+    @classmethod
+    async def find_all(cls, filters: dict):
+        async with async_session_maker() as session:
+            query = select(cls.model)
+            for key, value in filters.items():
+                if value is not None:
+                    if isinstance(value, str):
+                        query = query.filter(getattr(cls.model, key).ilike(f"%{value}%"))
+                    else:
+                        query = query.filter(getattr(cls.model, key) == value)
+            result = await session.execute(query)
+            return result.scalars().all()
+
+
 
 
 
