@@ -39,7 +39,22 @@ RoomCannotBeBookedException = HTTPException(
 )
 
 
+HotelAddingErrorException = HTTPException(
+    status_code=status.HTTP_406_NOT_ACCEPTABLE,
+    detail="Something went wrong"
+)
 
+
+UserIsNotAuthorized = HTTPException(
+    status_code=status.HTTP_401_UNAUTHORIZED,
+    detail="You have to be logged in to add hotel"
+)
+
+
+HotelUpdateErrorExecption = HTTPException(
+    status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+    detail="Error while updating hotel"
+)
 
 
 

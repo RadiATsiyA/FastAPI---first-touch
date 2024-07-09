@@ -1,6 +1,5 @@
-from pydantic import model_validator, Field
+from pydantic import model_validator
 from pydantic_settings import BaseSettings
-import os
 from dotenv import load_dotenv
 
 
