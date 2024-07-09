@@ -10,7 +10,7 @@ from app.users.models import Users
 
 router = APIRouter(
     prefix="/bookings",
-    tags=["Booking hotels"]
+    tags=["Bookings"]
 )
 
 
@@ -21,7 +21,7 @@ async def get_bookings(user: Users = Depends(get_current_user)) -> list[BookingS
 
 @router.post("")
 async def add_booking(room_id: int, date_form: date, date_to: date,
-                        user: Users = Depends(get_current_user)):
+                      user: Users = Depends(get_current_user)):
     booking = await BookingService.add(user.id, room_id, date_form, date_to)
     if not booking:
         raise RoomCannotBeBookedException
