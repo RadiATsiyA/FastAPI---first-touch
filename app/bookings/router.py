@@ -26,3 +26,8 @@ async def add_booking(room_id: int, date_form: date, date_to: date,
     if not booking:
         raise RoomCannotBeBookedException
 
+
+@router.delete("/{id}/")
+async def delete_booking(id: int, user: Users = Depends(get_current_user)):
+    return await BookingService.delete(model_id=id)
+
