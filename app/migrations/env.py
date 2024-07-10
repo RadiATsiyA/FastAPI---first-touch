@@ -15,7 +15,6 @@ from app.bookings.models import Bookings
 from app.users.models import Users
 
 
-
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
