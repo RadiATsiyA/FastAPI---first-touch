@@ -13,5 +13,5 @@ class Bookings(Base):
     date_from = Column(Date, nullable=False)
     date_to = Column(Date, nullable=False)
     price = Column(Integer, nullable=False)
-    total_cost = column_property(func.abs(func.datediff('day', date_to, date_from)) * price)
-    total_days = column_property(func.abs(func.datediff('day', date_to, date_from)))
+    total_cost = column_property((func.abs((date_to - date_from))) * price)
+    total_days = column_property(func.abs((date_to - date_from)))
