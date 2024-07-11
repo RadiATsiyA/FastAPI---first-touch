@@ -1,3 +1,5 @@
+from datetime import date
+
 from sqlalchemy.orm import relationship
 
 from app.database import Base
@@ -27,3 +29,7 @@ class Rooms(Base):
     services = Column(JSON, nullable=True)
     quantity = Column(Integer, nullable=False)
     image_id = Column(Integer)
+
+    def get_total_price(self, date_from: date, date_to: date) -> int:
+        days = abs(date_from - date_to).days
+        return days * self.price
