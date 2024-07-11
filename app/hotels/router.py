@@ -9,7 +9,7 @@ from app.users.models import Users
 from app.users.dependencies import get_current_user
 
 
-router = APIRouter(prefix="/hotels", tags=["Hotels"])
+router = APIRouter(prefix="/hotels", tags=["Hotels & Rooms"])
 
 
 @router.get("", response_model=List[HotelsGetScheme])
@@ -42,14 +42,15 @@ async def add_hotel(
     return new_hotel
 
 
-@router.put("/{id}/")
+@router.put("/{hotel_id}/")
 async def update_hotel(
+        hotel_id: int,
         hotel: HotelCreateUpdateScheme,
         user: Users = Depends(get_current_user)
 ):
     data = hotel.dict(exclude_unset=True)
     try:
-        return await HotelsService.update(model_id=hotel.id, name=hotel.name, location=hotel.location,
+        return await HotelsService.update(model_id=hotel_id, name=hotel.name, location=hotel.location,
                                           services=hotel.services, rooms_quantity=hotel.rooms_quantity,
                                           image_id=hotel.image_id)
     except Exception:
