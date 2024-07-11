@@ -56,6 +56,11 @@ HotelUpdateErrorExecption = HTTPException(
     detail="Error while updating hotel"
 )
 
+InvalidDateRangeException = HTTPException(
+    status_code=status.HTTP_400_BAD_REQUEST,
+    detail="Invalid date range"
+)
+
 
 
 
