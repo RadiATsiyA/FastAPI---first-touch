@@ -4,7 +4,6 @@ from pydantic import BaseModel
 
 
 class HotelCreateUpdateScheme(BaseModel):
-    id: int | None = None
     name: str
     location: str
     services: List[str]
