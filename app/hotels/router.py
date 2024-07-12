@@ -2,7 +2,8 @@ from typing import List, Optional
 
 from fastapi import APIRouter, Depends, Query
 
-from app.exeptions import HotelAddingErrorException, UserIsNotAuthorized, HotelUpdateErrorExecption
+from app.exeptions import HotelAddingErrorException, UserIsNotAuthorized, HotelUpdateErrorExecption, \
+    InvalidHotelIdException
 from app.hotels.schemas import HotelCreateUpdateScheme, HotelsGetScheme
 from app.hotels.service import HotelsService
 from app.users.models import Users
@@ -40,6 +41,14 @@ async def add_hotel(
     if not new_hotel:
         raise HotelAddingErrorException
     return new_hotel
+
+
+@router.get("/{hotel_id}")
+async def get_hotel_by_id(hotel_id: int) -> HotelsGetScheme:
+    result = await HotelsService.find_one_or_none(id=hotel_id)
+    if not result:
+        raise InvalidHotelIdException
+    return result
 
 
 @router.put("/{hotel_id}/")
