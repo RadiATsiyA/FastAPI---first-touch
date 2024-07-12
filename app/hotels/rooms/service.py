@@ -34,7 +34,6 @@ class RoomService(BaseServices):
 
                 room.rooms_left = max(room.quantity - rooms_booked, 0)
 
-                # Add room to the list
                 available_rooms.append(room)
 
                 return available_rooms
