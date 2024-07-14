@@ -1,3 +1,7 @@
+import asyncio
+
+from fastapi_cache.decorator import cache
+
 from typing import List, Optional
 
 from fastapi import APIRouter, Depends, Query
@@ -14,11 +18,13 @@ router = APIRouter(prefix="/hotels", tags=["Hotels & Rooms"])
 
 
 @router.get("", response_model=List[HotelsGetScheme])
+@cache(expire=60)
 async def get_hotels(
         name: Optional[str] = Query(None),
         location: Optional[str] = Query(None),
         rooms_quantity: Optional[int] = Query(None)
 ):
+    # await asyncio.sleep(3)
     filters = {
         'name': name,
         'location': location,
@@ -44,6 +50,7 @@ async def add_hotel(
 
 
 @router.get("/{hotel_id}")
+@cache(expire=60)
 async def get_hotel_by_id(hotel_id: int) -> HotelsGetScheme:
     result = await HotelsService.find_one_or_none(id=hotel_id)
     if not result:
