@@ -15,6 +15,10 @@ class Settings(BaseSettings):
     SECRET_KEY: str
     ALGORITHM: str
     DATABASE_URL: str = None
+    SMTP_HOST: str
+    SMTP_PORT: int
+    SMTP_USER: str
+    SMTP_PASS: str
 
     @model_validator(mode="before")
     def get_database_url(cls, v):
@@ -26,6 +30,5 @@ class Settings(BaseSettings):
 
 
 settings = Settings()
-
 
 
