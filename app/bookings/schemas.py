@@ -9,8 +9,8 @@ class BookingScheme(BaseModel):
     date_from: date
     date_to: date
     price: int
-    total_cost: int
-    total_days: int
+    total_cost: int = None
+    total_days: int = None
 
     class Config:
         from_attributes = True
