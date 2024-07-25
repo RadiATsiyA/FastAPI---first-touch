@@ -1,7 +1,7 @@
-from sqlalchemy.orm import column_property
+from sqlalchemy.orm import column_property, relationship
 
 from app.database import Base
-from sqlalchemy import Column, Integer, ForeignKey, Date, Computed, func
+from sqlalchemy import Column, Integer, ForeignKey, Date, func
 
 
 class Bookings(Base):
@@ -15,3 +15,8 @@ class Bookings(Base):
     price = Column(Integer, nullable=False)
     total_cost = column_property((func.abs((date_to - date_from))) * price)
     total_days = column_property(func.abs((date_to - date_from)))
+
+    user = relationship("Users", back_populates="booking")
+
+    def __str__(self):
+        return f"Booking #{self.id}"
