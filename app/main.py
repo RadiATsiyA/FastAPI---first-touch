@@ -4,8 +4,12 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
+from sqladmin import Admin
 
+from app.admin.views import UsersAdmin, BookingsAdmin
 from app.bookings.router import router as bookings_router
+from app.database import engine
+
 from app.users.router import router as users_router
 from app.hotels.router import router as hotels_router
 from app.hotels.rooms.router import router as rooms_router
@@ -47,7 +51,10 @@ app.add_middleware(
                    "Access-Control-Allow-Origin"]
 )
 
+admin = Admin(app, engine)
 
+admin.add_view(UsersAdmin)
+admin.add_view(BookingsAdmin)
 
 
 
